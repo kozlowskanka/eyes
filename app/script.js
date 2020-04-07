@@ -12,7 +12,8 @@ class App extends React.Component {
 
   state = {
     status: "off",
-    time: 0,
+    timeForWork: 10,
+    timeForRest: 5,
     timer: null,
   }
 
@@ -41,24 +42,22 @@ class App extends React.Component {
     if (this.state.time === 0) {
       this.playBell();
 
-      if (this.state.status === 'work') {
+      this.state.status === 'work' ? 
         this.setState({
           status: 'rest',
-          time: 20,
-        })
-      } else if (this.state.status === 'rest') {
+          time: this.state.timeForRest,
+        }) :
         this.setState({
           status: 'work',
-          time: 1200,
+          time: this.state.timeForWork,
         });
-      };
     }
   };
 
   startTimer = () => {
     this.setState({
       status: 'work',
-      time: 1200,
+      time: this.state.timeForWork,
       timer: setInterval(this.step, 1000),
     });
   };
