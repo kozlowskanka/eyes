@@ -8,12 +8,13 @@ const AppDescription = () => (
   </div>
 );
 
+let timeForWork = 10;
+let timeForRest = 5;
+
 class App extends React.Component {
 
   state = {
     status: "off",
-    timeForWork: 10,
-    timeForRest: 5,
     timer: null,
   }
 
@@ -42,22 +43,19 @@ class App extends React.Component {
     if (this.state.time === 0) {
       this.playBell();
 
-      this.state.status === 'work' ? 
-        this.setState({
-          status: 'rest',
-          time: this.state.timeForRest,
-        }) :
-        this.setState({
-          status: 'work',
-          time: this.state.timeForWork,
-        });
+      const { status } = this.state;
+
+      this.setState({
+        status: status === 'work' ? 'rest' : 'work',
+        time: status === 'work' ? timeForRest : timeForWork
+      })
     }
   };
 
   startTimer = () => {
     this.setState({
       status: 'work',
-      time: this.state.timeForWork,
+      time: timeForWork,
       timer: setInterval(this.step, 1000),
     });
   };
